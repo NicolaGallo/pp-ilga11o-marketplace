@@ -35,7 +35,8 @@ Invoke with `/pp-lega-seriea` in Claude Code. 86 endpoints, no API key.
 The skill drives `lega-seriea-pp-cli`. Install it first:
 
 ```bash
-npx -y @mvanhorn/printing-press install deltatre-sport-data --cli-only
+go install github.com/NicolaGallo/lega-seriea-pp-cli/cmd/lega-seriea-pp-cli@latest
+export PATH="$HOME/go/bin:$PATH"
 ```
 
 Verify: `lega-seriea-pp-cli --version`

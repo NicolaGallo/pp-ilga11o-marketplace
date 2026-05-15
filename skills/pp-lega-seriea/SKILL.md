@@ -18,16 +18,17 @@ metadata:
 
 This skill drives the `lega-seriea-pp-cli` binary. **You must verify the CLI is installed before invoking any command from this skill.** If it is missing, install it first:
 
-1. Install via the Printing Press installer:
+1. Install via Go (requires Go 1.21+):
    ```bash
-   npx -y @mvanhorn/printing-press install deltatre-sport-data --cli-only
+   go install github.com/NicolaGallo/lega-seriea-pp-cli/cmd/lega-seriea-pp-cli@latest
    ```
-2. Verify: `lega-seriea-pp-cli --version`
-3. Ensure `$GOPATH/bin` (or `$HOME/go/bin`) is on `$PATH`.
+2. Ensure `$GOPATH/bin` (usually `$HOME/go/bin`) is on `$PATH`:
+   ```bash
+   export PATH="$HOME/go/bin:$PATH"
+   ```
+3. Verify: `lega-seriea-pp-cli --version`
 
-If the `npx` install fails before this CLI has a public-library category, install Node or use the category-specific Go fallback after publish.
-
-If `--version` reports "command not found" after install, the install step did not put the binary on `$PATH`. Do not proceed with skill commands until verification succeeds.
+If `--version` reports "command not found" after install, `$GOPATH/bin` is not on `$PATH`. Add the export above to `~/.zshrc` or `~/.bashrc`. Do not proceed with skill commands until verification succeeds.
 
 lega-seriea-pp-cli talks directly to the same Deltatre Sport Data Platform that powers legaseriea.it — 86 endpoints, no API key required. Get live scores, standings, player xG, match formations, VAR decisions, and tournament simulation in one CLI with offline caching and agent-native JSON output.
 
