@@ -1,6 +1,6 @@
 ---
 name: pp-lega-seriea
-description: "The full Deltatre SDP — every Serie A stat, live score, and advanced metric from the official source, plus offline... Trigger phrases: `classifica serie a`, `chi ha segnato oggi in serie a`, `top scorers serie a`, `risultati serie a`, `formation inter milan`, `live scores serie a`, `use lega-seriea-pp-cli`."
+description: "The full Serie A stat(powered by Deltatre SDP), live score, and advanced metric from the official source, plus offline... Trigger phrases: `classifica serie a`, `chi ha segnato oggi in serie a`, `top scorers serie a`, `risultati serie a`, `formation inter milan`, `live scores serie a`, `use lega-seriea-pp-cli`."
 author: "Nicola Gallo"
 license: "Apache-2.0"
 argument-hint: "<command> [args] | install cli|mcp"
