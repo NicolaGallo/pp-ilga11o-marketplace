@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "pp-ilga11o-marketplace",
+  "description": "Nicola Gallo's Serie A toolkit — live scores, standings, player stats, fantasy, and match analysis via the official Deltatre SDP API.",
+  "owner": {
+    "name": "Nicola Gallo",
+    "url": "https://github.com/NicolaGallo"
+  },
+  "plugins": [
+    {
+      "name": "pp-lega-seriea",
+      "description": "Serie A CLI skill — live scores, standings, xG, formations, VAR, title race, fantasy XI.",
+      "source": "./",
+      "category": "sports"
+    }
+  ]
+}

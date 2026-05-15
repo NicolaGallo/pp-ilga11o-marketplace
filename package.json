@@ -1,0 +1,26 @@
+{
+  "name": "pp-ilga11o-marketplace",
+  "version": "1.0.0",
+  "description": "Nicola Gallo's Serie A toolkit for Claude Code — skill + agents powered by the official Deltatre SDP API.",
+  "license": "Apache-2.0",
+  "author": "Nicola Gallo",
+  "homepage": "https://github.com/NicolaGallo/pp-ilga11o-marketplace",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NicolaGallo/pp-ilga11o-marketplace.git"
+  },
+  "bin": {
+    "pp-ilga11o-marketplace": "./bin/install.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin/",
+    "skills/",
+    "agents/",
+    ".claude-plugin/",
+    "README.md",
+    "LICENSE"
+  ]
+}

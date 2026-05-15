@@ -1,0 +1,8 @@
+{
+  "name": "pp-lega-seriea",
+  "description": "Serie A data skill powered by the official Deltatre SDP API (same as legaseriea.it). Live scores, standings, xG, formations, VAR decisions, title race, and fantasy XI.",
+  "author": {
+    "name": "Nicola Gallo",
+    "url": "https://github.com/NicolaGallo"
+  }
+}
