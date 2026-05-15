@@ -1,6 +1,6 @@
 ---
 name: pp-lega-seriea
-description: "The full Serie A stat(powered by Deltatre SDP), live score, and advanced metric from the official source, plus offline... Trigger phrases: `classifica serie a`, `chi ha segnato oggi in serie a`, `top scorers serie a`, `risultati serie a`, `formation inter milan`, `live scores serie a`, `use lega-seriea-pp-cli`."
+description: "The full Deltatre SDP — every Serie A stat, live score, and advanced metric from the official source, plus offline... Trigger phrases: `classifica serie a`, `chi ha segnato oggi in serie a`, `top scorers serie a`, `risultati serie a`, `formation inter milan`, `live scores serie a`, `use lega-seriea-pp-cli`."
 author: "Nicola Gallo"
 license: "Apache-2.0"
 argument-hint: "<command> [args] | install cli|mcp"
@@ -12,7 +12,7 @@ metadata:
         - lega-seriea-pp-cli
 ---
 
-# Serie A — Printing Press CLI
+# Lega Serie A CLI
 
 ## Prerequisites: Install the CLI
 
@@ -85,7 +85,7 @@ These capabilities aren't available in any other tool for this API.
   _Use when an agent needs historical rivalry context before a big match._
 
   ```bash
-  lega-seriea-pp-cli derby --home juventus --away torino --agent
+  lega-seriea-pp-cli derby --team-a juventus --team-b torino --agent
   ```
 
 ### Agent-native plumbing
@@ -97,7 +97,52 @@ These capabilities aren't available in any other tool for this API.
   lega-seriea-pp-cli digest --agent
   ```
 
-## Command Reference
+## High-Level Commands
+
+Prefer these over the raw `football get-football-N` endpoints — they are stable, readable, and purpose-built.
+
+### Standings & Scores
+```bash
+lega-seriea-pp-cli standings --agent                          # current standings
+lega-seriea-pp-cli matches --live --agent                     # in-progress + recent matches
+lega-seriea-pp-cli matches --matchday 37 --agent              # matches for a specific round
+lega-seriea-pp-cli scorers --top 10 --agent                   # top scorers
+lega-seriea-pp-cli seasons --agent                            # list available seasons
+```
+
+### Match Analysis (needs a matchId from `matches --matchday N`)
+```bash
+lega-seriea-pp-cli match facts <matchId> --agent
+lega-seriea-pp-cli match lineups <matchId> --agent
+lega-seriea-pp-cli match shotmap <matchId> --agent
+lega-seriea-pp-cli match var <matchId> --agent
+lega-seriea-pp-cli match winprob <matchId> --agent
+lega-seriea-pp-cli match momentum <matchId> --agent
+lega-seriea-pp-cli match formation <matchId> --agent
+lega-seriea-pp-cli match feed <matchId> --agent
+lega-seriea-pp-cli match playerstats <matchId> --agent
+lega-seriea-pp-cli match preview <matchId> --agent
+```
+
+### Team Info (needs a teamId from `teams`)
+```bash
+lega-seriea-pp-cli teams --agent                              # list all teams with IDs
+lega-seriea-pp-cli team stats <teamId> --agent
+lega-seriea-pp-cli team roster <teamId> --agent
+lega-seriea-pp-cli team coaches <teamId> --agent
+lega-seriea-pp-cli team goals --agent
+lega-seriea-pp-cli team advanced --agent
+lega-seriea-pp-cli team compare <teamIdA> --vs <teamIdB> --agent
+```
+
+### Health
+```bash
+lega-seriea-pp-cli doctor                                     # verify setup
+```
+
+## Raw API Command Reference
+
+Use these when no high-level command covers the use case. Pass `--agent` to all.
 
 **lega-seriea-pp-cli-health** — Manage deltatre sport data health
 
@@ -204,46 +249,51 @@ lega-seriea-pp-cli which "<capability in your own words>"
 
 ## Recipes
 
-
-### Get today's match results
-
+### Current standings
 ```bash
-lega-seriea-pp-cli matches --live --json
+lega-seriea-pp-cli standings --agent
 ```
 
-Returns all in-progress and recently-finished matches with scores and goalscorer info.
+### Live or current-round matches
+```bash
+lega-seriea-pp-cli matches --live --agent
+lega-seriea-pp-cli matches --matchday 37 --agent
+```
 
 ### Top scorers with goals and assists
-
 ```bash
-lega-seriea-pp-cli scorers --json --select players.name,players.goals,players.assists,players.team
+lega-seriea-pp-cli scorers --top 10 --agent --select players.name,players.goals,players.assists,players.team
 ```
 
-Compact leaderboard using --select to extract only key fields from the verbose stats payload.
-
-### Full match analysis
-
+### Full match analysis (get matchId first, then drill in)
 ```bash
-lega-seriea-pp-cli match facts serie-a::Football_Match::840c647126df44c98ae44cdd46e05bb1 --json
+lega-seriea-pp-cli matches --matchday 37 --agent
+lega-seriea-pp-cli match facts <matchId> --agent
+lega-seriea-pp-cli match var <matchId> --agent
+lega-seriea-pp-cli match shotmap <matchId> --agent
 ```
 
-Match facts, lineups, shot map, and VAR events for a specific match ID.
+### Team roster and stats
+```bash
+lega-seriea-pp-cli teams --agent                              # find teamId
+lega-seriea-pp-cli team roster <teamId> --agent
+lega-seriea-pp-cli team stats <teamId> --agent
+```
 
 ### Team form over last 5 games
-
 ```bash
 lega-seriea-pp-cli form --team napoli --last 5 --agent
 ```
 
-Combines results, xG, and KPI across last 5 matches into one structured view.
-
 ### Title race at current matchday
-
 ```bash
 lega-seriea-pp-cli title-race --agent
 ```
 
-Projects which teams can still win the Scudetto based on remaining fixtures and current standings.
+### Head-to-head this season
+```bash
+lega-seriea-pp-cli derby --team-a inter --team-b milan --agent
+```
 
 ## Auth Setup
 
@@ -340,10 +390,9 @@ Parse `$ARGUMENTS`:
 
 ## MCP Server Installation
 
-Install the MCP binary from this CLI's published public-library entry or pre-built release, then register it:
-
 ```bash
-claude mcp add lega-seriea-pp-mcp -- lega-seriea-pp-mcp
+go install github.com/NicolaGallo/lega-seriea-pp-cli/cmd/lega-seriea-pp-mcp@latest
+claude mcp add lega-seriea -- lega-seriea-pp-mcp
 ```
 
 Verify: `claude mcp list`
